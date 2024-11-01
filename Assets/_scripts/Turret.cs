@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Getting an error for PartToRotate not sure why? its telling me its not refrenced even tho it is?
     [Header("Attributes")]
     public float range = 15f;
     public float fireRate = 1f;
@@ -18,7 +18,7 @@ public class Turret : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
     }
 
     void UpdateTarget()
@@ -46,32 +46,34 @@ public class Turret : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void LockOnTarget()
     {
-        if (target == null) return;
-
         Vector3 direction = target.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * lookSpeed).eulerAngles;
         partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+    }
+
+    void Update()
+    {
+        if (target == null) return;
+        LockOnTarget();
+
         if (fireCountdown <= 0f)
         {
             Shoot();
             fireCountdown = 1f / fireRate;
-            fireCountdown -= Time.deltaTime;
         }
+        fireCountdown -= Time.deltaTime;
     }
 
 
-    void Shoot()
+    void Shoot() //only shoots once before not shooting again?
     {
         GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Bullet bullet = bulletGO.GetComponent<Bullet>();
         if (bullet != null)
-        {
             bullet.Seek(target);
-        }
     }
     void OnDrawGizmosSelected()
     {

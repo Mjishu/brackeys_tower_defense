@@ -5,15 +5,11 @@ public class Bullet : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public float speed = 75f;
     private Transform target;
+    public GameObject impactEffect;
 
     public void Seek(Transform _target)
     {
         target = _target;
-
-    }
-
-    void Start()
-    {
 
     }
 
@@ -39,6 +35,9 @@ public class Bullet : MonoBehaviour
 
     void HitTarget()
     {
-        Debug.Log("Hit something");
+        GameObject effectIns = Instantiate(impactEffect, transform.position, transform.rotation);
+        Destroy(effectIns, 2f);
+        Destroy(gameObject);
+        Destroy(target.gameObject);
     }
 }
