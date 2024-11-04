@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class CameraControllerGame : MonoBehaviour
 {
+    [Header("Camera movement settings")]
     private bool doMovement = true;
-
     public float panSpeed = 30f;
     public float panBorderThicknessWidth = Screen.width / 15;
     public float panBorderThicknessHeight = Screen.height / 15;
 
+    [Header("Camera Bounds")]
     public float scrollSpeed = 5f;
     public float minY = 10f;
     public float maxY = 80f;
@@ -15,7 +16,6 @@ public class CameraControllerGame : MonoBehaviour
     public float maxX = 125f;
     public float minZ = -50f;
     public float maxZ = 125f;
-
 
     void Update()//!@todo: switch this to new input system
     {

@@ -1,20 +1,31 @@
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
     // Getting an error for PartToRotate not sure why? its telling me its not refrenced even tho it is?
-    [Header("Attributes")]
+    [Header("General")]
     public float range = 15f;
-    public float fireRate = 1f;
     public float lookSpeed = 10f;
-    public string enemyTag = "Enemy";
+
+    [Header("Use bullets(default)")]
+    public float fireRate = 1f;
     private float fireCountdown = 0f;
 
+    [Header("Use Laser")]
+    public bool isLaser = false;
+    public int damageOverTime = 10;
+    public LineRenderer lineRenderer;
+    public ParticleSystem ImpactEffect;
+    public Light impactLight;
+
     [Header("Unity setup fields")]
+    public string enemyTag = "Enemy";
     public Transform partToRotate;
     public GameObject bulletPrefab;
     public Transform firePoint;
     private Transform target;
+    private EnemyHealth targetHealth;
 
     void Start()
     {
@@ -39,6 +50,7 @@ public class Turret : MonoBehaviour
         if (nearestEnemy != null && shortestDistance <= range)
         {
             target = nearestEnemy.transform;
+            targetHealth = target.GetComponent<EnemyHealth>();
         }
         else
         {
@@ -56,17 +68,57 @@ public class Turret : MonoBehaviour
 
     void Update()
     {
-        if (target == null) return;
+        if (target == null)
+        {
+            if (isLaser)
+            {
+                if (lineRenderer.enabled)
+                {
+                    lineRenderer.enabled = false;
+                    ImpactEffect.Stop();
+                    impactLight.enabled = false;
+                }
+            }
+            return;
+        }
+
         LockOnTarget();
 
-        if (fireCountdown <= 0f)
+        if (isLaser)
         {
-            Shoot();
-            fireCountdown = 1f / fireRate;
+            Laser();
         }
-        fireCountdown -= Time.deltaTime;
+        else
+        {
+            if (fireCountdown <= 0f)
+            {
+                Shoot();
+                fireCountdown = 1f / fireRate;
+            }
+            fireCountdown -= Time.deltaTime;
+        }
+
     }
 
+    void Laser()
+    {
+        //DOT
+        targetHealth.TakeDamage(damageOverTime * Time.deltaTime);
+
+        if (!lineRenderer.enabled)
+        {
+            lineRenderer.enabled = true;
+            ImpactEffect.Play();
+            impactLight.enabled = true;
+        }
+
+        lineRenderer.SetPosition(0, firePoint.position);
+        lineRenderer.SetPosition(1, target.transform.position);
+
+        Vector3 dir = firePoint.position - target.position;
+        ImpactEffect.transform.position = target.position + dir.normalized;
+        ImpactEffect.transform.rotation = Quaternion.LookRotation(dir);
+    }
 
     void Shoot() //only shoots once before not shooting again?
     {
