@@ -1,15 +1,19 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Enemy))]
 public class EnemyMovement : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public float speed = 10f;
+
+
+    private Enemy enemy;
 
     private Transform target;
     private int wavepointIndex = 0;
 
     void Start()
     {
+        enemy = GetComponent<Enemy>();
         target = waypoints.points[0];
     }
 
@@ -17,12 +21,14 @@ public class EnemyMovement : MonoBehaviour
     void Update()
     {
         Vector3 direction = target.position - transform.position;
-        transform.Translate(speed * Time.deltaTime * direction.normalized, Space.World);
+        transform.Translate(enemy.speed * Time.deltaTime * direction.normalized, Space.World);
 
         if (Vector3.Distance(transform.position, target.position) <= 0.4f)
         {
             GetNextWaypoint();
         }
+
+        enemy.speed = enemy.startSpeed;
     }
 
     void GetNextWaypoint()

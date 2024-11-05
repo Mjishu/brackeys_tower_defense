@@ -1,4 +1,5 @@
 using Unity.Mathematics;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour
@@ -18,12 +19,13 @@ public class BuildManager : MonoBehaviour
     public GameObject buildEffect;
 
     private BuildingBlueprint buildingToBuild;
+    private Node selectedNode;
 
     public bool CanBuild { get { return buildingToBuild != null; } }
 
     public bool hasMoney { get { return PlayerStats.Money >= buildingToBuild.cost; } }
 
-    public void BuildBuildingOn(node node)
+    public void BuildBuildingOn(Node node)
     {
         if (PlayerStats.Money < buildingToBuild.cost)
         {
@@ -41,9 +43,16 @@ public class BuildManager : MonoBehaviour
         node.building = building;
     }
 
+    public void SelectNode(Node node)
+    {
+        selectedNode = node;
+        buildingToBuild = null;
+    }
+
     public void SetBuildingToBuild(BuildingBlueprint building)
     {
         buildingToBuild = building;
+        selectedNode = null;
     }
 
 }

@@ -19,6 +19,11 @@ public class CameraControllerGame : MonoBehaviour
 
     void Update()//!@todo: switch this to new input system
     {
+        if (GameManager.gameOver)
+        {
+            this.enabled = false;
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             doMovement = !doMovement;

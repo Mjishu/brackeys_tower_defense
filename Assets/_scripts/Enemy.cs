@@ -1,11 +1,21 @@
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public float health = 100;
     public int Value = 25;
 
+    public float startSpeed = 10f;
+    [HideInInspector]
+    public float speed;
+
     public GameObject deathEffect;
+
+    void Start()
+    {
+        speed = startSpeed;
+    }
 
     public void TakeDamage(float amount)
     {
@@ -15,6 +25,11 @@ public class EnemyHealth : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void Slow(float amount) //11:50
+    {
+        speed = startSpeed * (1f - amount);
     }
 
     void Die()

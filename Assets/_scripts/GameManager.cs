@@ -2,7 +2,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private bool gameOver = false;
+    public static bool gameOver;
+
+    public GameObject gameOverMenu;
+
+    void Start()
+    {
+        gameOver = false;
+    }
 
     void Update()
     {
@@ -16,5 +23,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Over");
         gameOver = true;
+
+        gameOverMenu.SetActive(true);
     }
 }

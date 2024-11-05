@@ -1,8 +1,7 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class node : MonoBehaviour
+public class Node : MonoBehaviour
 {
     public Color hoverColor;
     public Color InsufficientFundsColor;
@@ -27,13 +26,15 @@ public class node : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        if (!buildManager.CanBuild) return;
 
         if (building != null)
         {
-            Debug.Log("Can not build here, TODO: add ui for this later");
+            buildManager.SelectNode(this);
             return;
         }
+
+        if (!buildManager.CanBuild) return;
+
         buildManager.BuildBuildingOn(this);
     }
 
