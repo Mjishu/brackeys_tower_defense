@@ -3,7 +3,6 @@ using UnityEngine;
 public class CameraControllerGame : MonoBehaviour
 {
     [Header("Camera movement settings")]
-    private bool doMovement = true;
     public float panSpeed = 30f;
     public float panBorderThicknessWidth = Screen.width / 15;
     public float panBorderThicknessHeight = Screen.height / 15;
@@ -22,14 +21,6 @@ public class CameraControllerGame : MonoBehaviour
         if (GameManager.gameOver)
         {
             this.enabled = false;
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            doMovement = !doMovement;
-        }
-        if (!doMovement)
-        {
             return;
         }
         if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThicknessHeight)

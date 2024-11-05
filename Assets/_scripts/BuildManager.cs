@@ -5,6 +5,7 @@ using UnityEngine;
 public class BuildManager : MonoBehaviour
 {
     public static BuildManager instance;
+    public NodeUI nodeUI;
 
     void Awake()
     {
@@ -17,6 +18,7 @@ public class BuildManager : MonoBehaviour
     }
 
     public GameObject buildEffect;
+    public GameObject sellEffect;
 
     private BuildingBlueprint buildingToBuild;
     private Node selectedNode;
@@ -25,34 +27,34 @@ public class BuildManager : MonoBehaviour
 
     public bool hasMoney { get { return PlayerStats.Money >= buildingToBuild.cost; } }
 
-    public void BuildBuildingOn(Node node)
-    {
-        if (PlayerStats.Money < buildingToBuild.cost)
-        {
-            return;
-        }
-
-        PlayerStats.Money -= buildingToBuild.cost;
-
-        GameObject building = Instantiate(buildingToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
-
-        GameObject effect = Instantiate(buildEffect, node.GetBuildPosition(), Quaternion.identity);
-        Destroy(effect, 5f);
-
-
-        node.building = building;
-    }
-
     public void SelectNode(Node node)
     {
+        if (node == selectedNode)
+        {
+            DeselectNode();
+            return;
+        }
         selectedNode = node;
         buildingToBuild = null;
+
+        nodeUI.SetTarget(node);
     }
 
     public void SetBuildingToBuild(BuildingBlueprint building)
     {
         buildingToBuild = building;
+        DeselectNode();
+    }
+
+    public void DeselectNode()
+    {
         selectedNode = null;
+        nodeUI.Hide();
+    }
+
+    public BuildingBlueprint GetBuildingToBuild()
+    {
+        return buildingToBuild;
     }
 
 }
