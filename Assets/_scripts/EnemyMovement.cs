@@ -35,11 +35,17 @@ public class EnemyMovement : MonoBehaviour
     {
         if (wavepointIndex >= waypoints.points.Length - 1)
         {
-            Destroy(gameObject);
-            PlayerStats.Lives -= 1;
+
             return;
         }
         wavepointIndex++;
         target = waypoints.points[wavepointIndex];
+    }
+
+    void EndPath()
+    {
+        Destroy(gameObject);
+        PlayerStats.Lives -= 1;
+        WaveSpawner.EnemiesAlive--;
     }
 }

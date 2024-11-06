@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static bool gameOver;
 
     public GameObject gameOverMenu;
+
+    public GameObject completeLevelUI;
 
     void Start()
     {
@@ -25,5 +28,11 @@ public class GameManager : MonoBehaviour
         gameOver = true;
 
         gameOverMenu.SetActive(true);
+    }
+
+    public void WinLevel()
+    {
+        gameOver = true;
+        completeLevelUI.SetActive(true);
     }
 }

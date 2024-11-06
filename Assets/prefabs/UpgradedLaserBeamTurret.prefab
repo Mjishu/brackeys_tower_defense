@@ -10218,12 +10218,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914dd2469e3dd5c4ab52f585fc023a5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 15
+  range: 25
   lookSpeed: 10
   fireRate: 1
   isLaser: 1
-  damageOverTime: 10
-  slowAmount: 0.5
+  damageOverTime: 35
+  slowAmount: 0.4
   lineRenderer: {fileID: 5314692344156030901}
   ImpactEffect: {fileID: 9211420763818745174}
   impactLight: {fileID: 7853679525976056276}
