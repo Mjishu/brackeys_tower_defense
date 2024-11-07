@@ -15439,15 +15439,15 @@ MonoBehaviour:
   - enemy: {fileID: 3768835782834981958, guid: d4344bc4ca087b640b7095bc5f0e45c5, type: 3}
     count: 4
     rate: 2
-  - enemy: {fileID: 3768835782834981958, guid: d4344bc4ca087b640b7095bc5f0e45c5, type: 3}
-    count: 0
-    rate: 0
-  - enemy: {fileID: 3768835782834981958, guid: d4344bc4ca087b640b7095bc5f0e45c5, type: 3}
-    count: 5
-    rate: 2
-  - enemy: {fileID: 3768835782834981958, guid: d4344bc4ca087b640b7095bc5f0e45c5, type: 3}
-    count: 10
+  - enemy: {fileID: 3768835782834981958, guid: b6014b27f0caf3a48823e734792ab9dd, type: 3}
+    count: 3
     rate: 1
+  - enemy: {fileID: 3768835782834981958, guid: a018e5e39585611459a9fcd1687ccc05, type: 3}
+    count: 25
+    rate: 3
+  - enemy: {fileID: 3768835782834981958, guid: b6014b27f0caf3a48823e734792ab9dd, type: 3}
+    count: 7
+    rate: 2
   enemyPrefab: {fileID: 4288880679496511163, guid: d4344bc4ca087b640b7095bc5f0e45c5, type: 3}
   spawnPoint: {fileID: 477502486}
   timeBetweenWaves: 2
